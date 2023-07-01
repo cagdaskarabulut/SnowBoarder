@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+  bool canMove = true;
   [SerializeField] float torqueAmount = 1f;
   [SerializeField] float boostSpeed = 30f;
   [SerializeField] float baseSpeed = 20f;
@@ -16,20 +17,28 @@ public class PlayerController : MonoBehaviour
     rb2s = GetComponent<Rigidbody2D>();
     surfaceEffector2D = FindObjectOfType<SurfaceEffector2D>();
   }
-
+public void DisableControls(){
+    canMove = false;
+}
   // Update is called once per frame
   void Update()
   {
-    RotatePlayer();
-    RespondToBoost();
+    if (canMove)
+    {
+      RotatePlayer();
+      RespondToBoost();
+    }
   }
 
   private void RespondToBoost()
   {
-    if(Input.GetKey(KeyCode.Space)){
-        surfaceEffector2D.speed = boostSpeed;
-    } else {
-        surfaceEffector2D.speed = baseSpeed;
+    if (Input.GetKey(KeyCode.Space))
+    {
+      surfaceEffector2D.speed = boostSpeed;
+    }
+    else
+    {
+      surfaceEffector2D.speed = baseSpeed;
     }
   }
 
